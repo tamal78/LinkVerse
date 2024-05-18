@@ -76,10 +76,12 @@ export default async function UserPage({ params }) {
         />
       </div>
       <h2 className='text-2xl text-center mb-1'>{page.displayName}</h2>
-      <h3 className='text-md flex gap-2 justify-center items-center text-white/70'>
-        <FontAwesomeIcon className='h-4' icon={faLocationDot} />
-        <span>{page.location}</span>
-      </h3>
+      {page.location && (
+        <h3 className='text-md flex gap-2 justify-center items-center text-white/70'>
+          <FontAwesomeIcon className='h-4' icon={faLocationDot} />
+          <span>{page.location}</span>
+        </h3>
+      )}
       <div className='max-w-xs mx-auto text-center my-2'>
         <p>{page.bio}</p>
       </div>

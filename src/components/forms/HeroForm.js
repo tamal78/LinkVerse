@@ -4,7 +4,7 @@ import { signIn } from 'next-auth/react';
 import { redirect, useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
-export default function HeroForm({ user }) {
+export default function HeroForm({ user, isAlreadyMade, pageUri }) {
   const router = useRouter();
   useEffect(() => {
     if (
@@ -21,12 +21,13 @@ export default function HeroForm({ user }) {
     const form = ev.target;
     const input = form.querySelector('input');
     const username = input.value;
-    if (username.length > 0) {
+    if (username.length > 0 || pageUri) {
       if (user) {
-        router.push('/account?desiredUsername=' + username);
+        router.push('/account');
       } else {
         window.localStorage.setItem('desiredUsername', username);
         await signIn('google');
+        router.push('/account?desiredUsername=' + username);
       }
     }
   }
@@ -35,18 +36,21 @@ export default function HeroForm({ user }) {
       onSubmit={handleSubmit}
       className='inline-flex items-center shadow-lg bg-white shadow-gray-500/20'
     >
-      <span className='bg-white py-4 pl-4'>linkverce.to/</span>
+      <span className='bg-white py-4 pl-4'>
+        linkverce.vercel.app/{isAlreadyMade ? pageUri : ''}
+      </span>
       <input
         type='text'
         className=''
         style={{ backgroundColor: 'white', marginBottom: 0, paddingLeft: 0 }}
-        placeholder='username'
+        placeholder={isAlreadyMade ? '' : 'username'}
+        disabled={isAlreadyMade}
       />
       <button
         type='submit'
         className='bg-blue-500 text-white py-4 px-6 whitespace-nowrap'
       >
-        Join for Free
+        {isAlreadyMade ? 'Go To Dashboard' : 'Join for free'}
       </button>
     </form>
   );
