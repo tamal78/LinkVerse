@@ -5,8 +5,8 @@ import mongoose from 'mongoose';
 import { getServerSession } from 'next-auth';
 import { revalidatePath } from 'next/cache';
 
-export default async function grabUsername(formData) {
-  const username = formData.get('username');
+export default async function grabUsername({ formData, userName }) {
+  const username = userName ? userName : formData.get('username');
   mongoose.connect(process.env.MONGO_URI);
   const existingPageDoc = await Page.findOne({ uri: username });
   if (existingPageDoc) {

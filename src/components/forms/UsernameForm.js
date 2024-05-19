@@ -9,7 +9,7 @@ import { useState } from 'react';
 export default function UsernameForm({ desiredUsername }) {
   const [taken, setTaken] = useState(false);
   async function handleSubmit(formData) {
-    const result = await grabUsername(formData);
+    const result = await grabUsername({ formData });
 
     setTaken(result === false);
     if (result) {

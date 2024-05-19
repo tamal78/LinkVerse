@@ -144,3 +144,10 @@ export default async function UserPage({ params }) {
     </div>
   );
 }
+
+export async function generateMetadata({ params }, parent) {
+  const uri = params.uri;
+  return {
+    title: uri + ' | LinkVerse: One link for everything'
+  };
+}
