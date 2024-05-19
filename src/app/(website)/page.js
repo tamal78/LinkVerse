@@ -2,9 +2,11 @@ import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import HeroForm from '@/components/forms/HeroForm';
 import { Page } from '@/models/Page';
 import { getServerSession } from 'next-auth';
+import mongoose from 'mongoose';
 
 export default async function Home() {
   const session = await getServerSession(authOptions);
+  await mongoose.connect(process.env.MONGO_URI);
   const page = await Page.findOne({ owner: session?.user?.email });
 
   return (

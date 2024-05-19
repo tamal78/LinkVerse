@@ -37,7 +37,7 @@ export default function HeroForm({ user, isAlreadyMade, pageUri }) {
       className='inline-flex items-center shadow-lg bg-white shadow-gray-500/20'
     >
       <span className='bg-white py-4 pl-4'>
-        linkverce.vercel.app/{isAlreadyMade ? pageUri : ''}
+        linkverce.to/{isAlreadyMade ? pageUri : ''}
       </span>
       <input
         type='text'
