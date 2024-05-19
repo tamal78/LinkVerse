@@ -6,16 +6,16 @@ import { useEffect } from 'react';
 
 export default function HeroForm({ user, isAlreadyMade, pageUri }) {
   const router = useRouter();
-  useEffect(() => {
-    if (
-      'localStorage' in window &&
-      window.localStorage.getItem('desiredUsername')
-    ) {
-      const username = window.localStorage.getItem('desiredUsername');
-      window.localStorage.removeItem('desiredUsername');
-      redirect('/account?desiredUsername=' + username);
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (
+  //     'localStorage' in window &&
+  //     window.localStorage.getItem('desiredUsername')
+  //   ) {
+  //     const username = window.localStorage.getItem('desiredUsername');
+  //     window.localStorage.removeItem('desiredUsername');
+  //     redirect('/account?desiredUsername=' + username);
+  //   }
+  // }, []);
   async function handleSubmit(ev) {
     ev.preventDefault();
     const form = ev.target;
@@ -25,9 +25,10 @@ export default function HeroForm({ user, isAlreadyMade, pageUri }) {
       if (user) {
         router.push('/account');
       } else {
-        window.localStorage.setItem('desiredUsername', username);
-        await signIn('google');
-        router.push('/account?desiredUsername=' + username);
+        // window.localStorage.setItem('desiredUsername', username);
+        await signIn('google', {
+          callbackUrl: process.env.NEXT_PUBLIC_URL + '/account'
+        });
       }
     }
   }
