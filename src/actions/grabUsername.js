@@ -21,3 +21,9 @@ export default async function grabUsername({ formData, userName }) {
     return page;
   }
 }
+
+export async function isUsernameExists(user) {
+  mongoose.connect(process.env.MONGO_URI);
+  const existingPageDoc = await Page.findOne({ owner: user?.email });
+  return existingPageDoc ? true : false;
+}

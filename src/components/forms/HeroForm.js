@@ -1,6 +1,6 @@
 'use client';
 
-import grabUsername from '@/actions/grabUsername';
+import grabUsername, { isUsernameExists } from '@/actions/grabUsername';
 import { signIn } from 'next-auth/react';
 import { redirect, useRouter } from 'next/navigation';
 import { useEffect } from 'react';
@@ -24,7 +24,8 @@ export default function HeroForm({ user, isAlreadyMade, pageUri }) {
     const userName = input.value;
     if (userName.length > 0 || pageUri) {
       if (user) {
-        await grabUsername({ userName });
+        const isExist = await isUsernameExists(user);
+        if (!isExist) await grabUsername({ userName });
         router.push('/account');
       } else {
         // window.localStorage.setItem('desiredUsername', username);
